@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Birthday Baddie Bestie</title>
+
+  <style>
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:Arial, sans-serif;
+    }
+
+    body{
+      min-height:100vh;
+      overflow:hidden;
+      background:linear-gradient(135deg,#000000,#3b0764,#831843);
+      color:white;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      position:relative;
+      padding:15px;
+    }
+
+    .screen{
+      position:absolute;
+      width:100%;
+      height:100%;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      flex-direction:column;
+      padding:15px;
+      transition:1s;
+    }
+
+    .hidden{
+      opacity:0;
+      pointer-events:none;
+      transform:scale(0.9);
+    }
+
+    .game-box,
+    .card{
+      width:100%;
+      max-width:420px;
+      padding:30px 20px;
+      border-radius:28px;
+      background:rgba(255,255,255,0.08);
+      backdrop-filter:blur(12px);
+      border:1px solid rgba(255,255,255,0.15);
+      text-align:center;
+      box-shadow:0 0 30px rgba(255,0,200,0.3);
+    }
+
+    h1{
+      font-size:35px;
+      color:#f9a8d4;
+      margin-bottom:10px;
+    }
+
+    h2{
+      margin-top:10px;
+      font-size:24px;
+    }
+
+    p{
+      margin-top:15px;
+      font-size:16px;
+      line-height:1.6;
+      color:#ffe4fa;
+    }
+
+    .btn{
+      margin-top:25px;
+      padding:14px 25px;
+      border:none;
+      border-radius:18px;
+      background:linear-gradient(90deg,#c026d3,#ec4899);
+      color:white;
+      font-size:16px;
+      font-weight:bold;
+      cursor:pointer;
+      transition:0.3s;
+      width:100%;
+    }
+
+    .btn:hover{
+      transform:scale(1.04);
+    }
+
+    .choices{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:12px;
+      margin-top:25px;
+    }
+
+    .choice{
+      padding:16px;
+      border-radius:16px;
+      background:rgba(255,255,255,0.1);
+      border:1px solid rgba(255,255,255,0.15);
+      cursor:pointer;
+      transition:0.3s;
+      font-weight:bold;
+      font-size:15px;
+    }
+
+    .choice:hover{
+      transform:scale(1.03);
+      background:rgba(255,255,255,0.2);
+    }
+
+    .photo{
+      width:160px;
+      height:160px;
+      object-fit:cover;
+      border-radius:50%;
+      margin-top:20px;
+      border:4px solid #f472b6;
+      box-shadow:0 0 20px rgba(255,105,180,0.7);
+    }
+
+    .tags{
+      margin-top:25px;
+      display:flex;
+      justify-content:center;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .tag{
+      padding:10px 14px;
+      border-radius:999px;
+      background:rgba(255,255,255,0.1);
+      border:1px solid rgba(255,255,255,0.15);
+      font-size:13px;
+    }
+
+    /* FLOATY */
+
+    .floaty{
+      position:fixed;
+      font-size:24px;
+      animation:floaty 6s ease-in-out infinite;
+      opacity:0.8;
+      pointer-events:none;
+      z-index:999;
+    }
+
+    .f1{top:3%; left:5%; animation-delay:0s;}
+    .f2{top:8%; right:5%; animation-delay:1s;}
+    .f3{top:20%; left:3%; animation-delay:2s;}
+    .f4{top:25%; right:3%; animation-delay:3s;}
+
+    .f5{bottom:18%; left:4%; animation-delay:4s;}
+    .f6{bottom:8%; right:5%; animation-delay:2s;}
+
+    .f7{top:75%; left:8%; animation-delay:1s;}
+    .f8{top:78%; right:10%; animation-delay:5s;}
+
+    .f9{top:10%; left:45%; animation-delay:2s;}
+    .f10{bottom:12%; right:40%; animation-delay:3s;}
+
+    @keyframes floaty{
+      0%{
+        transform:translateY(0px) rotate(0deg);
+      }
+
+      50%{
+        transform:translateY(-15px) rotate(8deg);
+      }
+
+      100%{
+        transform:translateY(0px) rotate(0deg);
+      }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- MUSIC -->
+  <audio id="bgMusic" loop>
+    <source src="IVE.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- FLOATY -->
+  <div class="floaty f1">💅</div>
+  <div class="floaty f2">🔥</div>
+  <div class="floaty f3">😎</div>
+  <div class="floaty f4">✨</div>
+  <div class="floaty f5">🖤</div>
+  <div class="floaty f6">👑</div>
+  <div class="floaty f7">💖</div>
+  <div class="floaty f8">🎧</div>
+  <div class="floaty f9">🌙</div>
+  <div class="floaty f10">⚡</div>
+
+  <!-- GAME -->
+  <div class="screen" id="gameScreen">
+
+    <div class="game-box">
+
+      <h1>🎮 Birthday Challenge</h1>
+
+      <p>
+        Sebelum masuk ke birthday message...
+        <br>
+        jawab dulu pertanyaan penting ini 😎
+      </p>
+
+      <p style="margin-top:20px; font-size:18px; font-weight:bold; color:#f9a8d4;">
+        Siapa cowok paling baddie hari ini?
+      </p>
+
+      <div class="choices">
+
+        <div class="choice" onclick="wrongAnswer()">
+          Tetangga sebelah 😭
+        </div>
+
+        <div class="choice" onclick="wrongAnswer()">
+          NPC random 🗿
+        </div>
+
+        <div class="choice" onclick="showBirthday()">
+          GUA DONG 😎🔥
+        </div>
+
+        <div class="choice" onclick="wrongAnswer()">
+          Kucing oren 🐈
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- MAIN -->
+  <div class="screen hidden" id="birthdayScreen">
+
+    <div class="card">
+
+      <h1>Happy Birthday</h1>
+
+      <h2>MY BADDIE BESTIE 😎</h2>
+
+      <img src="Baddie.jpg" alt="Bestie Photo" class="photo">
+
+      <p>
+        Selamat ulang tahun untuk Baddie paling
+        savage, iconic, dan penuh aura main character 🔥
+      </p>
+
+      <div class="tags">
+        <div class="tag">🔥 Savage</div>
+        <div class="tag">😎 Cool Energy</div>
+        <div class="tag">👑 Main Character</div>
+      </div>
+
+      <button class="btn" onclick="openMessage()">
+        Open Secret Message 🎁
+      </button>
+
+    </div>
+
+  </div>
+
+  <script>
+
+    function wrongAnswer(){
+      alert('Salah bro 😭 coba lagi woiii');
+    }
+
+    function showBirthday(){
+
+      document.getElementById('bgMusic').play();
+
+      document.getElementById('gameScreen').classList.add('hidden');
+      document.getElementById('birthdayScreen').classList.remove('hidden');
+    }
+
+    function openMessage(){
+
+      alert(
+`Happy birthday buat bestie paling baddie se-alam semesta 😎🔥
+
+Semoga hidup lu makin gacor, dompet makin tebel, muka makin mahal, dan aura main character lu makin gak ketolong ✨
+
+Makasih udah jadi temen paling seru diajak chaos, paling random, tapi juga paling ngerti keadaan 😭✋
+
+Semoga semua yang lu pengen tahun ini bisa tercapai satu-satu 💖
+
+Dan semoga hubungan lu sama crush lu langgeng terus ya bestie 😌🔥
+
+Happy level up day 🎂✨`
+      );
+
+    }
+
+  </script>
+
+</body>
+</html>
